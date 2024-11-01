@@ -6,3 +6,4 @@ imblearn
 scikit-learn
 xgboost
 scikit-optimize
+streamlit
