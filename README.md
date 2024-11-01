@@ -1,72 +1,121 @@
-# Medical Representative Sales Prediction
+# Medical Representative Sales Analysis 
 
-This project is a graduation assignment for the DEPI program, aiming to predict sales success for medical representatives. By analyzing various features such as sales history, representative details, and customer insights, we implemented machine learning models to optimize sales strategies and enhance decision-making processes.
+## Team Members
+- AbdelRahman AbdelHalem Helal Ahmed
+- Mazen Mohamed Elsayed Elsafty
+- Mazen Mahmoud Shaban Mohamed
+- Rashad Mohamed AboElmkaram Shehab
+- Mazen Mohamed Mohamed Ahmed
+- Karim Ahmed Farhat Eid
 
-## Project Overview
+## Supervisor
+Eng. Sherif Said
 
-The Medical Representative Sales project leverages multiple machine learning algorithms to assess and predict sales success. The project's objective is to analyze representative characteristics, product information, and customer demographics to understand the factors that drive successful sales and to provide recommendations for future strategy.
+## Track
+IBM Data Science (ALX1_AIS3_S1e)
 
-### Project Flow and Mechanism
+## Organization
+Digital Egypt Pioneers Initiative
 
-1. **Data Loading and Exploration**: 
-   - Data is initially loaded and explored to identify missing values, outliers, and feature distributions.
-   - Essential exploratory data analysis (EDA) techniques are employed to gain insights into feature relevance and correlation with the target variable.
+---
 
-2. **Data Preprocessing**:
-   - **Normalization**: Numerical features are normalized using the `MinMaxScaler` from `sklearn.preprocessing`, scaling all numeric values between 0 and 1 to ensure fair model training.
-   - **Categorical Encoding**: The `OneHotEncoder` is applied to categorical data, with `sparse_output=False` and `handle_unknown='ignore'`, creating dummy variables for categorical features to make them usable by the machine learning models.
+## Abstract
+Medical representatives play a vital role in the pharmaceutical industry by bridging the gap between pharmaceutical companies and healthcare professionals. This project focuses on analyzing factors influencing doctors' prescribing behaviors and developing a supervised machine learning model to predict the likelihood of doctors prescribing drugs from a local pharmaceutical company. Using the AdaBoost algorithm, the model achieved an accuracy of **84%** and an **F1-score of 88%**. Key insights on factors such as doctor age, specialty, and location were also analyzed, providing useful guidance for optimizing sales strategies.
 
-3. **Model Training and Selection**:
-   - Various machine learning algorithms are tested to determine the best-performing model:
-     - **Decision Tree Classifier**: Provides a baseline understanding with interpretable tree-based structures.
-     - **K-Nearest Neighbors (KNN)**: Considers proximity in feature space to predict sales outcomes.
-     - **Random Forest Classifier**: A robust ensemble method that improves accuracy through multiple decision trees.
-     - **XGBoost Classifier**: A gradient-boosted model known for high accuracy and efficiency.
-     - **AdaBoost Classifier**: Combines multiple weak learners to form a strong predictive model.
-     - **Support Vector Machine (SVM)**: Finds an optimal hyperplane for classification, effective with high-dimensional data.
-   - The models are evaluated in a loop to determine the highest-performing approach based on chosen metrics.
+---
 
-4. **Evaluation Metrics**:
-   - The model performance is assessed using the following metrics:
-     - **Accuracy Score**: Provides a simple measurement of model correctness across training and testing datasets.
-     - **F1 Score**: Balances precision and recall, providing insight into the quality of the model’s positive predictions.
-     - **F-Beta Score**: A custom metric with `beta=0.5` is used to give more weight to precision, which is crucial in sales predictions.
+## 1. Introduction
 
-5. **Results and Model Insights**:
-   - Models are compared based on F1 and accuracy scores, with further tuning and analysis to refine model selection.
-   - Insights are drawn from model results to identify factors that contribute to successful medical sales outcomes, guiding future strategies.
+### 1.1 Background
+Medical representatives promote and sell pharmaceutical products to healthcare professionals in a competitive market with similar alternatives. This project leverages machine learning to predict doctors' prescribing behaviors based on their profiles, aiming to help companies optimize representatives' strategies.
 
-## Results
+### 1.2 Problem Statement
+Medical representatives face a challenge in persuading doctors to prescribe their company’s drugs when alternatives are available. This project addresses the primary issue of predicting whether a doctor, based on specific features, will prescribe a drug from the local company.
 
-After training and evaluating various models, we identified the **XGBoost Classifier** and **Random Forest Classifier** as top performers in terms of accuracy and F1 scores. These models demonstrated superior predictive power in classifying successful sales efforts, with F1 scores indicating a balanced performance in terms of precision and recall.
+### 1.3 Objectives
+1. To determine the factors influencing doctors’ prescribing behaviors.
+2. To analyze relationships between variables such as doctor age, specialty, and location.
+3. To build a supervised machine learning model to predict if a doctor will prescribe a local company’s generic drugs.
 
-## Getting Started
+---
 
-### Prerequisites
+## 2. Literature Review
+Studies indicate that a doctor’s specialty, experience, and location significantly impact prescribing habits. Various machine learning algorithms have been applied to similar problems in healthcare, with AdaBoost being particularly effective for imbalanced classification tasks.
 
-To run this project locally, you will need the following Python packages:
-- `numpy`
-- `pandas`
-- `scikit-learn`
-- `xgboost`
+---
 
-Install the required libraries using:
-```bash
-pip install numpy pandas scikit-learn xgboost
-```
+## 3. Methodology
 
-### Running the Project
+### 3.1 Data Collection
+The dataset was sourced from two tables: `medicine_table` and `doctor_table`, containing information about doctors, their specialties, locations, and prescribing behaviors.
 
-1. Clone this repository:
-   ```bash
-   git clone <repository-url>
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd Medical-Representative-Sales
-   ```
-3. Run the notebook or Python script to execute the model training and evaluation.
+### 3.2 Data Preprocessing
+1. **Handling Missing Values**: Missing data was imputed or dropped as needed.
+2. **Feature Encoding**: Categorical features (e.g., specialty, location) were encoded using one-hot and label encoding.
+3. **Normalization**: Continuous variables (e.g., age, experience) were normalized with `MinMaxScaler`.
+4. **Skewness Check**: Checked skewness; it was acceptable, so no further transformation was applied.
 
-## Conclusion
+---
 
-This project successfully highlights the factors affecting sales success in the medical representative field using machine learning. By comparing multiple models and evaluating based on precision-oriented metrics, we provide a data-driven solution to enhance sales strategy.
+## 4. Exploratory Data Analysis (EDA)
+
+### 4.1 Key Visualizations and Insights
+1. **Correlation Heatmap**: Showed strong correlations between doctor class and examination price with prescribing behavior.
+2. **Bar Charts**:
+   - **Specialties**: General Practitioners (GPs) and Chest specialists were more likely to prescribe local company drugs.
+   - **Class Distribution**: Class B doctors were the most frequent prescribers.
+   - **Drug Price**: Drugs priced at 50, 100, 120, or 150 were most frequently prescribed by local doctors.
+   - **Workplace**: Clinic doctors were more likely to prescribe local company drugs, while hospital doctors were neutral.
+3. **Box Plots**:
+   - **Price**: Fairly consistent, with a median of 35 and a range of 20 to 45.
+   - **Examination Price**: Median around 100 with a range of 50 to 200, showing a consistent pricing structure.
+
+### 4.2 Feature Importance
+The most important features of the AdaBoost model:
+- **Doctor’s Class**: The most influential factor.
+- **Examination Price**: Doctors with lower examination prices were more likely to prescribe local company products.
+
+---
+
+## 5. Model Development
+
+### 5.1 Model Selection
+Various machine learning models were tested, including Decision Trees, Random Forests, and Support Vector Machines. AdaBoost was selected for its superior performance.
+
+### 5.2 Model Training
+Data was split in an 80:20 ratio for training and testing. Hyperparameter tuning was done through grid search, and metrics like accuracy and F1-score were used for evaluation.
+
+### 5.3 Model Performance
+- **Accuracy**: 84.6%
+- **F1-Score**: 88.2%
+
+---
+
+## 6. Streamlit Deployment
+- We have developed a streamlit app for user usage 
+- App link : https://medical-representative-sales.streamlit.app/
+
+---
+
+## 7. Conclusion
+The project successfully applied supervised machine learning to predict doctors' prescribing behaviors. Analyzing features such as class, specialty, and examination price led to an AdaBoost model with an accuracy of **84.6%** and an **F1-score of 88.2%**. These results offer pharmaceutical companies insights for more efficient marketing strategies, ultimately saving resources and improving targeting.
+
+---
+
+## 8. Future Work
+1. **Model Improvement**: Further tuning of the AdaBoost model and exploring advanced algorithms.
+2. **Expanded Dataset**: Including more doctors and additional features to improve robustness.
+3. **Real-Time Recommendations**: Developing a real-time recommendation system for medical representatives.
+
+---
+
+## 9. References
+- [Scikit-learn documentation](https://scikit-learn.org/)
+
+---
+
+
+
+
+
+---
